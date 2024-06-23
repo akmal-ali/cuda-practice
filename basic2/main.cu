@@ -15,8 +15,7 @@ __global__ void VecAdd(float* x1, float* x2, float* y, int N)
 
 int main()
 {
-    std::cout << "Start" << std::endl;
-    std::cout.flush();
+    std::cerr << "Start" << std::endl;
     cudaFree(0);
     const size_t N = 1920*1080;
 
@@ -50,6 +49,6 @@ int main()
         assert(x1.host[i] + x2.host[i] == y.host[i]);
     }
 
-    std::cout << " finished successfully" << std::endl;
+    std::cerr << " finished successfully" << std::endl;
     return 0;
 }
