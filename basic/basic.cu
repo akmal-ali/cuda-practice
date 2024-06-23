@@ -25,7 +25,7 @@ struct CudaVector
         cudaMemcpy(host.data(), deviceMemory.get(), sizeof(T)*host.size(), cudaMemcpyDeviceToHost);
     }
 
-    T * device_ptr() { return deviceMemory.get()};
+    T * device_ptr() { return deviceMemory.get(); };
 
 
     std::shared_ptr<T> deviceMemory;
