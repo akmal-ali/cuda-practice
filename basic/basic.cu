@@ -59,6 +59,7 @@ __global__ void VecAdd(float* x1, float* x2, float* y)
 
 int main()
 {
+    cudaFree(0);
     cuda_hello<<<1,1>>>(); 
 
 
