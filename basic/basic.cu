@@ -1,3 +1,4 @@
+// Google colab - pick a machine with an Nvidia GPU!
 #include <iostream>
 #include <memory>
 #include <vector>
