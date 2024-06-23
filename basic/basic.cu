@@ -15,11 +15,14 @@ __global__ void VecAdd(float* x1, float* x2, float* y)
     y[i] = x1[i] + x2[i];
 }
 
-void main()
+int main()
 {
     auto x1 = CreateTensor<float>(1024);
     auto x2 = CreateTensor<float>(1024);
     auto y  = CreateTensor<float>(1024);
 
     VecAdd<<<1, 1024>>>(x1.get(), x2.get(), y.get());
+
+    
+    return 0;
 }
