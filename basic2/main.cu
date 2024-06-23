@@ -42,6 +42,6 @@ int main()
     {
         assert(x1.host[i] + x2.host[i] == y.host[i]);
     }
-    std::cout << __FILE__ << " finished successfully" << std::endl;
+    std::cout << " finished successfully" << std::endl;
     return 0;
 }
