@@ -25,6 +25,9 @@ struct CudaVector
         cudaMemcpy(host.data(), deviceMemory.get(), sizeof(T)*host.size(), cudaMemcpyDeviceToHost);
     }
 
+    T * device_ptr() { return deviceMemory.get()};
+
+
     std::shared_ptr<T> deviceMemory;
 };
 
@@ -51,7 +54,7 @@ int main()
     x2.ToDevice();
     y.ToDevice();
 
-    VecAdd<<<1, 1024>>>(x1.get(), x2.get(), y.get());
+    VecAdd<<<1, 1024>>>(x1.device_ptr(), x2.device_ptr(), y.device_ptr());
     y.ToHost();
 
     for(int i = 0 ; i < x1.host.size(); ++i)
