@@ -1,5 +1,12 @@
 #include <iostream>
 
+template<typename T>
+std::shared_ptr<T> CreateTensor(size_t N)
+{
+    T * data;
+    cudaMalloc(&data, N*sizeof(T));
+    return std::shared_ptr<T>(data, [](T* data){ cudaFree(data);});
+}
 
 __global__ void VecAdd(float* x1, float* x2, float* y)
 {
@@ -9,14 +16,9 @@ __global__ void VecAdd(float* x1, float* x2, float* y)
 
 void main()
 {
-    float* x1 = cudaMalloc(1024*sizeof(float));
-    float* x2 = cudaMalloc(1024*sizeof(float));
-    float* y  = cudaMalloc(1024*sizeof(float));
+    auto x1 = CreateTensor<float>(1024);
+    auto x2 = CreateTensor<float>(1024);
+    auto y  = CreateTensor<float>(1024);
 
     VecAdd<<<1, 1024>(x1, x2, y);
-
-    // Free memory.
-    cudaFree(x1); x1 = nullptr;
-    cudaFree(x2); x2 = nullptr;
-    cudaFree(y);   y = nullptr;
 }
