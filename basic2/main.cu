@@ -10,18 +10,20 @@ __global__ void VecAdd(float* x1, float* x2, float* y, int N)
 {
     int i  = blockDim.x * blockIdx.x + threadIdx.x;
     if(i < N)
+    {
         y[i] = x1[i] + x2[i];
+    }
 }
 
-__global__ void cuda_hello(){
+__global__ void cuda_hello()
+{
     printf("Hello World from GPU!\n");
 }
 
 int main()
 {
     cuda_hello<<<1,1>>>(); 
-
-
+    return 0;
     const size_t N = 1920*1080;
 
     CudaVector<float, N> x1;
