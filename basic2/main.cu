@@ -16,6 +16,7 @@ __global__ void VecAdd(float* x1, float* x2, float* y, int N)
 int main()
 {
     std::cout << "Start" << std::endl;
+    std::cout.flush();
     cudaFree(0);
     const size_t N = 1920*1080;
 
