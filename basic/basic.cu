@@ -1,6 +1,8 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <cassert>
+
 
 template<typename T>
 std::shared_ptr<T> CreateTensor(size_t N)
