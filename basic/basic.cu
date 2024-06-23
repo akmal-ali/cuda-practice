@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 
 template<typename T>
 std::shared_ptr<T> CreateTensor(size_t N)
