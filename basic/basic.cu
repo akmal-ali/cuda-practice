@@ -85,7 +85,6 @@ int main()
     for(int i = 0 ; i < x1.host.size(); ++i)
     {
         
-        std::cout << x1.host[i] << " + " << x2.host[i] << " =" << y.host[i] << std::endl;
         assert(x1.host[i] + x2.host[i] == y.host[i]);
     }
 
