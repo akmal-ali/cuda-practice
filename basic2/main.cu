@@ -51,6 +51,5 @@ int main()
 
     printf("Hello world\n");
     std::cout << " finished successfully" << std::endl;
-    #error
     return 0;
 }
