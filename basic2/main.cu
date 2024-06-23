@@ -45,7 +45,7 @@ int main()
     // Run kernel
     VecAdd<<<blocksPerGrid, threadsPerBlock>>>(
         x1.device_ptr(), x2.device_ptr(), y.device_ptr(),
-        N);
+        (int)N);
 
     CUDA_CHECK(cudaDeviceSynchronize());
     y.ToHost();
