@@ -13,10 +13,16 @@ __global__ void VecAdd(float* x1, float* x2, float* y, int N)
         y[i] = x1[i] + x2[i];
 }
 
+__global__ void cuda_hello(){
+    printf("Hello World from GPU!\n");
+}
+
 int main()
 {
     std::cerr << "Start" << std::endl;
     cudaFree(0);
+    cuda_hello<<<1,1>>>(); 
+
     const size_t N = 1920*1080;
 
     CudaVector<float, N> x1;
@@ -48,6 +54,8 @@ int main()
     {
         assert(x1.host[i] + x2.host[i] == y.host[i]);
     }
+
+    cuda_hello<<<1,1>>>(); 
 
     std::cerr << " finished successfully" << std::endl;
     return 0;
