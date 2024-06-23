@@ -19,12 +19,12 @@ struct CudaVector
     void ToDevice()
     {
         deviceMemory = CreateTensor<T>(host.size());
-        cudaMemcpy(deviceMemory.get(), host.data(), sizeof(T)*host.size(), cudaMemcpyHostToDevice);
+        cudaMemcpy(deviceMemory.get(), host.data(), sizeof(T)*N, cudaMemcpyHostToDevice);
     }
 
     void ToHost()
     {
-        cudaMemcpy(host.data(), deviceMemory.get(), sizeof(T)*host.size(), cudaMemcpyDeviceToHost);
+        cudaMemcpy(host.data(), deviceMemory.get(), sizeof(T)*N, cudaMemcpyDeviceToHost);
     }
 
     T * device_ptr() { return deviceMemory.get(); };
@@ -36,7 +36,7 @@ struct CudaVector
 __global__ void VecAdd(float* x1, float* x2, float* y)
 {
     int i  = threadIdx.x;
-    y[i] = x1[i] + x2[i];
+    y[i] = 100.0f;//x1[i] + x2[i];
 }
 
 int main()
