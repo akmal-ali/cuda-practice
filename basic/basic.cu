@@ -9,7 +9,7 @@
     do { \
         cudaError_t err = call; \
         if(err != cudaSuccess) { \
-            std::cerr << "CUDA Error: " << cudaGetErrorString(err) << " at line " << __LINE__ << std::endl; \
+            std::cerr << "CUDA Error: " << " at line " << __LINE__ << std::endl; \
             exit(EXIT_FAILURE); \
         } \
     } while(0)
