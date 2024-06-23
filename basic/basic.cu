@@ -57,6 +57,7 @@ int main()
     y.ToDevice();
 
     VecAdd<<<1, 1024>>>(x1.device_ptr(), x2.device_ptr(), y.device_ptr());
+    cudaDeviceSynchronize();
     y.ToHost();
 
     for(int i = 0 ; i < x1.host.size(); ++i)
