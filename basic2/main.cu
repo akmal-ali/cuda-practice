@@ -15,9 +15,6 @@ __global__ void VecAdd(float* x1, float* x2, float* y, int N)
 
 int main()
 {
-    cudaFree(0);
-    cuda_hello<<<1,1>>>(); 
-
     const size_t N = 1920*1080;
 
     CudaVector<float, N> x1;
@@ -43,7 +40,6 @@ int main()
 
     for(int i = 0 ; i < x1.host.size(); ++i)
     {
-        
         assert(x1.host[i] + x2.host[i] == y.host[i]);
     }
 
