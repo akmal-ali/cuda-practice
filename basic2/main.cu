@@ -19,9 +19,8 @@ __global__ void cuda_hello(){
 
 int main()
 {
-    std::cerr << "Start" << std::endl;
-    cudaFree(0);
     cuda_hello<<<1,1>>>(); 
+
 
     const size_t N = 1920*1080;
 
