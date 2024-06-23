@@ -15,6 +15,11 @@
     } while(0)
 
 
+__global__ void cuda_hello(){
+    printf("Hello World from GPU!\n");
+}
+
+
 template<typename T>
 std::shared_ptr<T> CreateTensor(size_t N)
 {
@@ -54,6 +59,9 @@ __global__ void VecAdd(float* x1, float* x2, float* y)
 
 int main()
 {
+    cuda_hello<<<1,1>>>(); 
+
+
     CudaVector<float, 1024> x1;
     CudaVector<float, 1024> x2;
     CudaVector<float, 1024> y;
