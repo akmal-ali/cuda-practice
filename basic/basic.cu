@@ -2,14 +2,28 @@
 #include <memory>
 #include <vector>
 #include <cassert>
+#include <cuda_runtime.h>
+
+
+// Error checking macro
+#define CUDA_CHECK(call) \
+    do { \
+        cudaError_t err = call; \
+        if(err != cudaSuccess) { \
+            std::cerr << "CUDA Error: " << cudaGetErrorString(err) << " at line " << __LINE__ << std::endl; \
+            exit(EXIT_FAILURE); \
+        } \
+    } while(0)
 
 
 template<typename T>
 std::shared_ptr<T> CreateTensor(size_t N)
 {
     T * data;
-    cudaMalloc(&data, N*sizeof(T));
-    return std::shared_ptr<T>(data, [](T* data){ cudaFree(data);});
+    CUDA_CHECK(cudaMalloc(&data, N*sizeof(T)));
+    return std::shared_ptr<T>(data, [](T* data){ 
+        CUDA_CHECK(cudaFree(data));
+    });
 }
 
 template<typename T, size_t N>
@@ -18,19 +32,19 @@ struct CudaVector
     std::array<T, N> host;
     void ToDevice()
     {
-        deviceMemory = CreateTensor<T>(host.size());
-        cudaMemcpy(deviceMemory.get(), host.data(), sizeof(T)*N, cudaMemcpyHostToDevice);
+        mDevice = CreateTensor<T>(host.size());
+        CUDA_CHECK(cudaMemcpy(mDevice.get(), host.data(), sizeof(T)*N, cudaMemcpyHostToDevice));
     }
 
     void ToHost()
     {
-        cudaMemcpy(host.data(), deviceMemory.get(), sizeof(T)*N, cudaMemcpyDeviceToHost);
+        CUDA_CHECK(cudaMemcpy(host.data(), mDevice.get(), sizeof(T)*N, cudaMemcpyDeviceToHost));
     }
 
-    T * device_ptr() { return deviceMemory.get(); };
+    T * device_ptr() { return mDevice.get(); };
 
 
-    std::shared_ptr<T> deviceMemory;
+    std::shared_ptr<T> mDevice;
 };
 
 __global__ void VecAdd(float* x1, float* x2, float* y)
@@ -57,7 +71,7 @@ int main()
     y.ToDevice();
 
     VecAdd<<<1, 1024>>>(x1.device_ptr(), x2.device_ptr(), y.device_ptr());
-    cudaDeviceSynchronize();
+    CUDA_CHECK(cudaDeviceSynchronize());
     y.ToHost();
 
     for(int i = 0 ; i < x1.host.size(); ++i)
