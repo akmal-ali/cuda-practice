@@ -26,7 +26,7 @@ struct CudaVector
     }
 
     std::shared_ptr<T> deviceMemory;
-}
+};
 
 __global__ void VecAdd(float* x1, float* x2, float* y)
 {
