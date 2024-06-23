@@ -23,7 +23,6 @@ __global__ void cuda_hello()
 int main()
 {
     cuda_hello<<<1,1>>>(); 
-    return 0;
     const size_t N = 1920*1080;
 
     CudaVector<float, N> x1;
