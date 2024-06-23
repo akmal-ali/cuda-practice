@@ -23,7 +23,7 @@ __global__ void cuda_hello(){
 template<typename T>
 std::shared_ptr<T> CreateTensor(size_t N)
 {
-    T * data;
+    T * data = nullptr;
     CUDA_CHECK(cudaMalloc(&data, N*sizeof(T)));
     return std::shared_ptr<T>(data, [](T* data){ 
         CUDA_CHECK(cudaFree(data));
