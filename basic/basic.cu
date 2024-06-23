@@ -10,7 +10,7 @@ std::shared_ptr<T> CreateTensor(size_t N)
     return std::shared_ptr<T>(data, [](T* data){ cudaFree(data);});
 }
 
-template<typename T, N>
+template<typename T, size_t N>
 struct CudaVector
 {
     std::array<T, N> host;
