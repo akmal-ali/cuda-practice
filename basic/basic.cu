@@ -36,7 +36,7 @@ struct CudaVector
     std::array<T, N> host;
     void ToDevice()
     {
-        mDevice = CreateTensor<T>(host.size());
+        mDevice = CreateTensor<T>(N);
         CUDA_CHECK(cudaMemcpy(mDevice.get(), host.data(), sizeof(T)*N, cudaMemcpyHostToDevice));
     }
 
