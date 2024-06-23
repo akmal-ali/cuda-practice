@@ -21,5 +21,5 @@ void main()
     auto x2 = CreateTensor<float>(1024);
     auto y  = CreateTensor<float>(1024);
 
-    VecAdd<<<1, 1024>(x1, x2, y);
+    VecAdd<<<1, 1024>>>(x1, x2, y);
 }
