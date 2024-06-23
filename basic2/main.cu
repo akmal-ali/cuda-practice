@@ -5,7 +5,7 @@
 #include <cassert>
 #include "common.cuh"
 
-
+// Vector add!
 __global__ void VecAdd(float* x1, float* x2, float* y, int N)
 {
     int i  = blockDim.x * blockIdx.x + threadIdx.x;
@@ -15,6 +15,7 @@ __global__ void VecAdd(float* x1, float* x2, float* y, int N)
 
 int main()
 {
+    printf("Starting %s \n", __FILE__);
     cudaFree(0);
     const size_t N = 1920*1080;
 
@@ -35,7 +36,11 @@ int main()
 
     int threadsPerBlock = 256;
     int blocksPerGrid = (N+threadsPerBlock-1)/threadsPerBlock;
-    VecAdd<<<blocksPerGrid, threadsPerBlock>>>(x1.device_ptr(), x2.device_ptr(), y.device_ptr(), N);
+    // Run kernel
+    VecAdd<<<blocksPerGrid, threadsPerBlock>>>(
+        x1.device_ptr(), x2.device_ptr(), y.device_ptr(),
+        N);
+
     CUDA_CHECK(cudaDeviceSynchronize());
     y.ToHost();
 
