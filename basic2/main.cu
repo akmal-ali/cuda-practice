@@ -22,7 +22,7 @@ __global__ void cuda_hello()
 
 int main()
 {
-    cuda_hello<<<1,1>>>(); 
+    cuda_hello<<<1,1>>>();
     const size_t N = 1920*1080;
 
     CudaVector<float, N> x1;
@@ -39,6 +39,8 @@ int main()
     x1.ToDevice();
     x2.ToDevice();
     y.ToDevice();
+
+    return;
 
     int threadsPerBlock = 256;
     int blocksPerGrid = (N+threadsPerBlock-1)/threadsPerBlock;
