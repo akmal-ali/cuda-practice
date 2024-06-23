@@ -54,7 +54,7 @@ struct CudaVector
 __global__ void VecAdd(float* x1, float* x2, float* y)
 {
     int i  = threadIdx.x;
-    y[i] = 100.0f;//x1[i] + x2[i];
+    y[i] = x1[i] + x2[i];
 }
 
 int main()
@@ -84,7 +84,9 @@ int main()
 
     for(int i = 0 ; i < x1.host.size(); ++i)
     {
+        
         std::cout << x1.host[i] << " + " << x2.host[i] << " =" << y.host[i] << std::endl;
+        assert(x1.host[i] + x2.host[i] == y.host[i]);
     }
 
     return 0;
